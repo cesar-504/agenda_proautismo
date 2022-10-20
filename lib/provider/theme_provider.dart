@@ -8,7 +8,7 @@ class ThemeProvider extends ChangeNotifier {
 }
 
 class WhiteTheme{
-  static Color primaryColor = const Color(0xFFECD006);
+  static Color primaryColor = const Color(0xFF0685EC);
   static Color secondaryColor = const Color(0xFF231F1F);
   static Color black = const Color.fromRGBO(9, 9, 9, 9);
   static Color white = const Color.fromRGBO(249, 249, 249, 1);
