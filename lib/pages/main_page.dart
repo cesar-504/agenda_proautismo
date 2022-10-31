@@ -66,9 +66,20 @@ class _MainPageState extends State<MainPage> {
                  ],
                ),
                const Spacer(),
-               Btn(primary: true, text: "¡Registrar!", onPressed: ((){
-                  context.router.push(const CalendarRoute());
-               }))
+               Row(
+                 children: [
+                   Expanded(
+                     child: Btn(primary: true, text: "¡Registrar!", onPressed: ((){
+                        context.router.push(const NewUserRoute());
+                     })),
+                   ),
+                   Expanded(
+                     child: Btn(primary: true, text: "Iniciar sesión", onPressed: ((){
+                       context.router.push(const LoginRoute());
+                     })),
+                   ),
+                 ],
+               )
              ],
           ),
         ),

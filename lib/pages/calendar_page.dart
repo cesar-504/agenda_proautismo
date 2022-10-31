@@ -21,6 +21,9 @@ class _CalendarPageState extends State<CalendarPage> {
       ),
       body: ListView.builder(
           itemBuilder:(BuildContext context,int index){
+
+
+
             return CalendarCard(
                 data: Task(
                   id_task: 0,
@@ -34,6 +37,11 @@ class _CalendarPageState extends State<CalendarPage> {
             );
           },
           itemCount: 10,
+      ),
+      floatingActionButton: FloatingActionButton(heroTag: "add task", onPressed: () {
+        context.router.push(NewTaskRoute());
+      },
+        child: Icon(Icons.add),
       ),
     );
   }
@@ -83,7 +91,8 @@ class CalendarCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   ElevatedButton(onPressed: (){
-                      context.router.push(TaskReviewRoute(task: data));
+                    context.router.push(TaskReviewRoute(task: data));
+                   //context.router.push(SpecialTaskRoute());
 
                   }, child: Icon(Icons.play_arrow),style: ElevatedButton.styleFrom(
                     shape: CircleBorder(),
