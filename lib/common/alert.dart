@@ -65,6 +65,59 @@ class Alert {
       },
     );
   }
+  static Future<void> alertChild(
+      BuildContext context,
+      Widget child,
+      {
+        Fun? ok,
+        String okMsg = "Aceptar",
+        Fun? cancel,
+        String cancelMsg = "Cancelar",
+        String? title
+      } ) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: title != null ? Text(title) : null,
+
+          content : Row(
+            children: <Widget>[
+
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(8.0,16.0,8.0,16.0),
+                  child: child,
+                ),
+              ),
+
+            ],
+          ),
+          actions: <Widget>[
+
+            if(cancel != null) Btn(
+              text: cancelMsg,
+              onPressed: (){
+                cancel.call();
+                Navigator.pop(context);
+              },
+
+            ),
+            Btn(
+                text: okMsg,
+                onPressed: (){
+                  Navigator.pop(context);
+                  ok?.call();
+
+                },
+                primary:true
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   static void snackBarMsg(BuildContext context, String msg, {String? title,int millis=3000,String? titleButton,Fun? function}){
     if(msg.isEmpty){

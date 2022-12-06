@@ -44,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
                     controller: correo,
-                    decoration: const InputDecoration(hintText: "Correo"),
+                    decoration: const InputDecoration(hintText: "Usuario"),
                     validator: (text){
                       if(text!.isEmpty) return "Debe ingresar un usuario";
                       return null;

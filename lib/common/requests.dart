@@ -16,7 +16,10 @@ class Requests {
       String url, T Function(FT json) fromJson) async {
     return reqRes("GET", url, fromJson, null);
   }
-
+  static Future<Result<T?>> getResWithBody<FT, T>(String url, dynamic data,
+      [T Function(FT json)? fromJson]) async {
+    return reqRes("GET", url, fromJson, data);
+  }
   static Future<Result<List<T>?>> postResList<FT, T>(String url, dynamic data,
       [T Function(FT json)? fromJson]) async {
     return reqResList("POST", url, fromJson, data);

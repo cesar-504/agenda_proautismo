@@ -1,10 +1,13 @@
+import 'package:agenda_proautismo/app_router.gr.dart';
 import 'package:agenda_proautismo/common/widgets/title_text.dart';
+import 'package:agenda_proautismo/models/tasks.dart';
 import 'package:agenda_proautismo/pages/calendar_page.dart';
 import 'package:agenda_proautismo/provider/main_provider.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 class TaskReviewPage extends StatefulWidget {
-  final Task task;
+  final TaskMin task;
   const TaskReviewPage({required this.task, Key? key}) : super(key: key);
 
   @override
@@ -16,30 +19,43 @@ class _TaskReviewPageState extends State<TaskReviewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar( backgroundColor: context.themeWatch.primaryColor,),
-      body: Column(
-        children: [
-          TitleText(widget.task.title),
-          Spacer(),
-          CalificationBtn(value: 2, onTab: (){}),
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
 
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CalificationBtn(value: 2, onTab: (){}),
-              CalificationBtn(value: 0, onTab: (){}),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CalificationBtn(value: 2, onTab: (){}),
-              CalificationBtn(value: 1, onTab: (){}),
-              CalificationBtn(value: 0, onTab: (){}),
-            ],
-          ),
-        ],
+          children: [
+            Spacer(),
+            SuperTitle(widget.task.TaskTitle!),
+            if(widget.task.TaskType!=2)Image.network("https://ip20soft.tech/proautismo/assets/images/tasks-nodes/8.png",height: 100,),
+
+            if(widget.task.TaskType!=2)Icon(Icons.category_outlined,size: 100,color: Colors.black12,),
+            Spacer(),
+            if(context.mainWatch.level==0) CalificationBtn(value: 2, onTab: (){exit(2);}),
+
+            if(context.mainWatch.level==1)Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CalificationBtn(value: 2, onTab: (){exit(2);}),
+                CalificationBtn(value: 0, onTab: (){exit(0);}),
+              ],
+            ),
+
+            if(context.mainWatch.level==2)Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CalificationBtn(value: 2, onTab: (){exit(2);}),
+                CalificationBtn(value: 1, onTab: (){exit(1);}),
+                CalificationBtn(value: 0, onTab: (){exit(0);}),
+              ],
+            ),
+            Spacer(),
+          ],
+        ),
       ),
     );
+  }
+  exit(int value){
+    context.router.popUntilRouteWithName(CalendarRoute.name);
   }
 }
 

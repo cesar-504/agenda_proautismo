@@ -58,10 +58,10 @@ class _MainPageState extends State<MainPage> {
 
                    ),
 
-                   itemCount: context.mainWatch.profile.length,
+                   itemCount: context.mainWatch.profiles.length,
                   // itemCount:5,// context.mainWatch.profile.length,
                    itemBuilder: (context,i){
-                     return ProfileCard(profile:context.mainWatch.profile[i]);
+                     return ProfileCard(profile:context.mainWatch.profiles[i]);
                      //return ProfileCard(profile:Profile());
                    },
                  ),
@@ -123,23 +123,51 @@ class ProfileCard extends StatefulWidget {
 
 class _ProfileCardState extends State<ProfileCard> {
   File? image;
-
+  int level = 0;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 125,
       width: 125,
       child: InkWell(
-        onTap: (){
-          context.router.push(const CalendarRoute());
+        onTap: ()async{
+          context.mainProvider.setLevel(level);
+          context.mainProvider.setProfile(widget.profile);
+          await context.router.push(const CalendarRoute());
+          context.mainProvider.setProfile(null);
         },
         child: Card(
           elevation: 6,
           child: Column(
             children:  [
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  InkWell(onTap: (){
+                    setState(() {
+                      level=0;
+                    });
+                  }, child:  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Icon(Icons.circle_outlined,color:level==0?context.themeWatch.primaryColor: Colors.grey,size: 16,),
+                  )),
+                  InkWell(onTap: (){
+                    setState(() {
+                      level=1;
+                    });
+                  }, child:  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Icon(Icons.check_circle_outline,color:level==1?context.themeWatch.primaryColor: Colors.grey,size: 16,),
+                  )),
+                  InkWell(onTap: (){
+                    setState(() {
+                      level=2;
+                    });
+                  }, child:  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Icon(Icons.check_circle,color: level==2?context.themeWatch.primaryColor:Colors.grey,size: 16,),
+                  )),
+                  Spacer(),
                   InkWell(onTap: (){
                     dropImage(context,(f){
                         if(!f.ok!){

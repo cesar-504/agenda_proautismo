@@ -12,7 +12,7 @@ class MainProvider extends ChangeNotifier {
   UserMin? get user => _user;
 
   List<Profile> _profiles = [];
-  List<Profile> get profile => _profiles;
+  List<Profile> get profiles => _profiles;
 
   void login(UserMin  u,List<Profile> p){
     _user=u;
@@ -29,9 +29,21 @@ class MainProvider extends ChangeNotifier {
     notifyListeners();
   }
   bool get isAuthenticated => _user !=null;
-  //
 
-
+  //Configuracion de perfil
+  
+  Profile? _currentProfile;
+  Profile? get currentProfile =>_currentProfile;
+  void setProfile(Profile? p){
+    _currentProfile = p;
+    notifyListeners();
+  }
+  int _level = 0;
+  int get level => _level;
+  void setLevel(int l){
+    _level = l;
+    notifyListeners();
+  }
 
 }
 
