@@ -73,7 +73,7 @@ class _SpecialTaskSelectPageState extends State<SpecialTaskSelectPage> {
           ),
         ),okMsg: "Reintentar",cancelMsg: "Salir",ok:()async{
           var rf = await finishTask(FinishTaskReq(widget.activityId));
-          context.router.popUntilRouteWithName(SpecialTaskSelectRoute.name);
+          context.router.popUntilRouteWithName(SpecialTaskRoute.name);
         },cancel: ()async{
           var rf = await finishTask(FinishTaskReq(widget.activityId));
           context.router.popUntilRouteWithName(CalendarRoute.name);
@@ -134,17 +134,7 @@ class _SpecialTaskSelectPageState extends State<SpecialTaskSelectPage> {
                                     color: Colors.transparent,
                                     child:  InkWell(
                                       onTap: (){
-                                        Alert.alertChild(context, SizedBox(
-                                          height: 162,
-                                          child: Column(
-                                            children: [
-                                              CalificationBtn(value: 1, onTab: (){}),
-                                              //Icon(Icons.check_circle_outline,color: Colors.green,size: 50,),
-                                              const Subtitle("Sigue intentando, puedes mejorar")
-                                            ],
-                                          ),
-                                        ));
-                                        return;
+
                                         selectedOption = e.TaskNodeId!;
                                         paso+=1;
                                         options=[];
