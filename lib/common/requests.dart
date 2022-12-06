@@ -40,7 +40,7 @@ class Requests {
       req.headers.set('Content-type', 'application/json; charset=utf-8');
       req.headers.set('Accept', 'application/json');
 
-      print("Pasa");
+
 
       //final token = (await instance.mainModel.userLogin?.getIdToken());
       //if (token != null) req.headers.set('Authorization', 'Bearer $token');
@@ -65,15 +65,15 @@ class Requests {
 
         var result = Result(data, json["msg"], json["code"], json["ok"]);
         if (result.ok == null) {
-          return Result.Err("fallo al leer respuesta del servidor", 500);
+          return Result.Err("fallo al leer respuesta del servidor", "ServerError");
         }
         return result;
       } catch (e) {
-        return Result.Err("fallo al leer respuesta del servidor", 500);
+        return Result.Err("fallo al leer respuesta del servidor", "ServerError");
       }
     } catch (e) {
       print(e.toString());
-      return Result.Err("fallo al realizar peticion", 500);
+      return Result.Err("fallo al realizar peticion", "ServerError");
     }
   }
 
@@ -104,20 +104,20 @@ class Requests {
 
         var result = Result(data, json["msg"], json["code"], json["ok"]);
         if (result.ok == null) {
-          return Result.Err("fallo al leer respuesta del servidor", 500);
+          return Result.Err("fallo al leer respuesta del servidor", "ServerError");
         }
         return result;
       } catch (e) {
-        return Result.Err("fallo al leer respuesta del servidor", 500);
+        return Result.Err("fallo al leer respuesta del servidor", "ServerError");
       }
     } catch (e) {
-      return Result.Err("fallo al realizar peticion", 500);
+      return Result.Err("fallo al realizar peticion", "ServerError");
     }
   }
 }
 
 class BaseUrl {
-  static String base = "https://8014-201-171-56-151.ngrok.io"; // GlobalConfiguration().getValue("ApiUrl");
+  static String base = "https://agenda-proautismo-api.azurewebsites.net"; // GlobalConfiguration().getValue("ApiUrl");
 }
 
 String mkurl(String url, [dynamic params]) {
