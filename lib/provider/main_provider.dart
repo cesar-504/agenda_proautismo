@@ -1,5 +1,6 @@
 
 import 'package:agenda_proautismo/models/login.dart';
+import 'package:agenda_proautismo/models/tasks.dart';
 import 'package:agenda_proautismo/provider/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -42,6 +43,14 @@ class MainProvider extends ChangeNotifier {
   int get level => _level;
   void setLevel(int l){
     _level = l;
+    notifyListeners();
+  }
+
+  //temporal
+  List<TaskMin> _tasksTmp =[];
+  List<TaskMin> get tasksTmp => _tasksTmp;
+  void addTasksTmp(TaskMin l){
+    _tasksTmp.add(l);
     notifyListeners();
   }
 

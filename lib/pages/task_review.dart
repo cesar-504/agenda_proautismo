@@ -28,7 +28,8 @@ class _TaskReviewPageState extends State<TaskReviewPage> {
             SuperTitle(widget.task.TaskTitle!),
             if(widget.task.TaskType!=2)Image.network("https://ip20soft.tech/proautismo/assets/images/tasks-nodes/8.png",height: 100,),
 
-            if(widget.task.TaskType!=2)Icon(Icons.category_outlined,size: 100,color: Colors.black12,),
+            if(widget.task.TaskType!=2 && widget.task.file==null)Icon(Icons.category_outlined,size: 100,color: Colors.black12,),
+            if(widget.task.TaskType!=2 && widget.task.file!=null)Flexible(child: Image.file(widget.task.file!,)),
             Spacer(),
             if(context.mainWatch.level==0) CalificationBtn(value: 2, onTab: (){exit(2);}),
 

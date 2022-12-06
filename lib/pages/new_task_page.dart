@@ -1,4 +1,9 @@
+import 'dart:io';
+
+import 'package:agenda_proautismo/common/alert.dart';
+import 'package:agenda_proautismo/common/widgets/bottom_drop.dart';
 import 'package:agenda_proautismo/common/widgets/btn.dart';
+import 'package:agenda_proautismo/models/tasks.dart';
 import 'package:agenda_proautismo/provider/main_provider.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +21,9 @@ class NewTaskPage extends StatefulWidget {
 class _NewTaskPageState extends State<NewTaskPage> {
   String? dropdownValue = null;
   bool tareaLibre = true;
+  File? file;
+
+  TextEditingController nameCtrl = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,31 +33,33 @@ class _NewTaskPageState extends State<NewTaskPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SuperTitle("Nueva tarea"),
+              const SuperTitle("Nueva tarea"),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
-                  height: 52,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Btn(text: "Tarea libre",primary: true, onPressed: (){
-                          //context.router.push(AddChildRoute());
-                          setState(() {
-                            tareaLibre =true;
-                          });
-                        }),
-                      ),
-                      Expanded(
-                        child: Btn(text: "Tarea Enseñanza",primary: true, onPressed: (){
-                          //context.router.push(AddChildRoute());
-                          setState(() {
-                            tareaLibre =false;
-                          });
-                        }),
-                      ),
-                    ],
+                  height: 66,
+                  child: Center(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Btn(text: "Tarea libre",primary: tareaLibre, onPressed: (){
+                            //context.router.push(AddChildRoute());
+                            setState(() {
+                              tareaLibre =true;
+                            });
+                          }),
+                        ),
+                        Expanded(
+                          child: Btn(text: "Interactiva",primary: !tareaLibre, onPressed: (){
+                            //context.router.push(AddChildRoute());
+                            setState(() {
+                              tareaLibre =false;
+                            });
+                          }),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -69,7 +79,7 @@ class _NewTaskPageState extends State<NewTaskPage> {
                   dropdownValue = value!;
                 });
               },
-              items: ["Tender la cama","Poner la cama","Lavarse los dientes"].map<DropdownMenuItem<String>>((String value) {
+              items: ["Tender la cama"].map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -79,28 +89,51 @@ class _NewTaskPageState extends State<NewTaskPage> {
 
 
               if(tareaLibre)TextFormField(
-                decoration: InputDecoration(hintText: "Titulo"),
+                controller: nameCtrl,
+                decoration: const InputDecoration(hintText: "Titulo"),
               ),
 
-              if(tareaLibre)TextFormField(
-                decoration: InputDecoration(hintText: "Color"),
-              ),
-              if(tareaLibre)TextFormField(
-                decoration: InputDecoration(hintText: "Icono"),
-              ),
-              if(tareaLibre)TextFormField(
-                decoration: InputDecoration(hintText: "Imagen/Fondo"),
+              // if(tareaLibre)TextFormField(
+              //   decoration: InputDecoration(hintText: "Color"),
+              // ),
+              // if(tareaLibre)TextFormField(
+              //   decoration: InputDecoration(hintText: "Icono"),
+              // ),
+
+              TextFormField(
+                decoration: const InputDecoration(hintText: "Fecha inicio"),
               ),
               TextFormField(
-                decoration: InputDecoration(hintText: "Fecha inicio"),
+                decoration: const InputDecoration(hintText: "Fecha final",),
               ),
-              TextFormField(
-                decoration: InputDecoration(hintText: "Fecha final",),
+              if(file!=null) Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.file(file!,height: 100,),
+              ),
+              // if(tareaLibre)TextFormField(
+              //   decoration: InputDecoration(hintText: "Imagen/Fondo"),
+              // ),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Btn(text: "Agregar imagen", onPressed: (){
+                    dropImage(context,(f){
+                      if(!f.ok!){
+                        Alert.alert(context, f.msg!);
+                        return;
+                      }
+                      setState(() {
+                        file = f.data;
+                      });
+                    });
+                  }),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Btn(text: "Guardar",primary: true, onPressed: (){
-                  context.router.push(AddChildRoute());
+                  context.mainProvider.addTasksTmp(TaskMin()..TaskId=0..TaskType=(tareaLibre?1:2)..TaskTitle=nameCtrl.text..file=file);
+                  context.router.pop();
                 }),
               )
             ],

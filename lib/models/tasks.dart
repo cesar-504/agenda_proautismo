@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:json_annotation/json_annotation.dart';
 part 'tasks.g.dart';
 
@@ -21,6 +23,8 @@ class TaskMin{
   int? TaskId;
   String? TaskTitle;
   int? TaskType; // 1 = Normal , 2 = Interactiva
+  @JsonKey(ignore: true)
+  File? file;
   static TaskMin fromJson(Map<String, dynamic> json) => _$TaskMinFromJson(json);
   Map<String, dynamic> toJson() => _$TaskMinToJson(this);
 }

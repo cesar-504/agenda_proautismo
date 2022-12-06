@@ -30,7 +30,7 @@ class _CalendarPageState extends State<CalendarPage> {
       return;
     }
     setState(() {
-      tasks = r.data!.Tasks!;
+      tasks = r.data!.Tasks! + context.mainProvider.tasksTmp;
     });
   }
 
@@ -40,8 +40,9 @@ class _CalendarPageState extends State<CalendarPage> {
       appBar: AppBar(
         backgroundColor: context.themeWatch.primaryColor,
         actions: [
-          IconButton(onPressed: (){
-            context.router.push(NewTaskRoute());
+          IconButton(onPressed: ()async {
+            await context.router.push(NewTaskRoute());
+            load();
           }, icon: const Icon(Icons.add)),
         ],
       ),
@@ -150,7 +151,8 @@ class CalendarCard extends StatelessWidget {
                   ),
                   //Temmporal
                   if(data.TaskType==2)Flexible(child: Image.network("https://ip20soft.tech/proautismo/assets/images/tasks-nodes/8.png",)),
-                  if(data.TaskType!=2)Flexible(child: Icon(Icons.category_outlined,size: 100,color: Colors.black12,),),
+                  if(data.TaskType!=2 && data.file==null)Flexible(child: Icon(Icons.category_outlined,size: 100,color: Colors.black12,),),
+                  if(data.TaskType!=2 && data.file!=null)Flexible(child: Image.file(data.file!,)),
 
 
                 ],
